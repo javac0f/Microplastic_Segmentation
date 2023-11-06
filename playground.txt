@@ -1,0 +1,15 @@
+if torch.cuda.is_available():
+    input_batch = input_batch.to('cuda')
+    model = model.to('cuda')
+
+    with torch.no_grad():
+        output = model(input_batch)
+
+    print(torch.round(output[0]))
+    print(type(torch.round(output[0])))
+
+
+    
+# TESTING OUR FUNCTION
+full_path = os.path.join(config.X_TRAIN_DATA, 'D4-Control-6-1_1_MMStack_Pos0.ome.tif')
+preprocess_image(full_path)
