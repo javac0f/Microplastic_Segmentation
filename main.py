@@ -41,8 +41,6 @@ def train(model, loader, optimizer, loss_fn, device):
         x = x.to(device, dtype=torch.float32)
         y = y.to(device, dtype=torch.float32)
 
-        print(x)
-
         optimizer.zero_grad()
         y_pred = model(x)
         loss = loss_fn(y_pred, y)
@@ -100,13 +98,11 @@ val_dataset = ImageDataset(image_paths=x_val, mask_paths=y_val)
 # LOAD DATA AND VALIDATION DATASETS
 train_loader = DataLoader(dataset=train_dataset,
                           batch_size=config.BATCH_SIZE,
-                          shuffle=True,
-                          num_workers=1)
+                          shuffle=True)
 
 valid_loader = DataLoader(dataset=val_dataset,
                           batch_size=config.BATCH_SIZE,
-                          shuffle=False,
-                          num_workers=1)
+                          shuffle=False)
 
 
 # TRAIN THROUGH EPOCH CYCLES

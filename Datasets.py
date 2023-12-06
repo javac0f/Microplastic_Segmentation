@@ -2,7 +2,7 @@ import os
 import cv2
 import numpy as np
 
-
+import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
 import albumentations as album
@@ -27,11 +27,16 @@ class ImageDataset(Dataset):
         # GET IMAGES
         image = cv2.imread(self.images_path[index], cv2.IMREAD_COLOR)
         image = cv2.resize(image, (config.IMAGE_SIZE , config.IMAGE_SIZE))
+        image = np.transpose(image, (2,0,1))
+        image = torch.from_numpy(image)
         #image = self.transform(image)
 
         # GET MASK 
         mask = cv2.imread(self.masks_path[index], cv2.IMREAD_COLOR)
         mask = cv2.resize(mask, (config.IMAGE_SIZE , config.IMAGE_SIZE))
+        #mask = np.expand_dims(mask, axis=0) ## (1, 256, 256)
+        #mask = mask.astype(np.float32)
+        mask = torch.from_numpy(mask)
         #mask = self.transform(mask)
 
         # apply augmentations
