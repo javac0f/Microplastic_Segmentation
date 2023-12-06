@@ -7,10 +7,6 @@ X_TRAIN_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmen
 Y_TRAIN_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/train_data/Ground_Truth"
 X_TEST_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/test_data/Raw_tiffs"
 
-X_TRAIN_DATA_TOY:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/train_toy/Raw_tiffs"
-Y_TRAIN_DATA_TOY:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/train_toy/Ground_Truth"
-
-
 
 IMAGE_SIZE:int = 256
 BATCH_SIZE:int = 25

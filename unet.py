@@ -80,5 +80,3 @@ class UNet(nn.Module):
         x = self.up_conv1(x, skip1_out)
         x = self.conv_last(x)
         return x
-
-model = UNet()
