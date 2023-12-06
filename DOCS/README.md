@@ -31,4 +31,5 @@ PURPOSE:
 
 [2] UNet for Building Segmentation (PyTorch). Retrieved November 9, 2023 from https://kaggle.com/code/balraj98/unet-for-building-segmentation-pytorch
 
+https://github.com/nikhilroxtomar/Retina-Blood-Vessel-Segmentation-in-PyTorch/blob/main/UNET/train.py
 

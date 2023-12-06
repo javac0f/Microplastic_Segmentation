@@ -21,34 +21,48 @@ import torch.nn as nn
 from torch.nn.functional import relu
 from torch.utils.data import DataLoader
 
+from Datasets import ImageDataset
+
 from segmentation_models_pytorch.utils.train import TrainEpoch, ValidEpoch
 from sklearn.model_selection import train_test_split
 import albumentations as album
 
+# list of np.arrays representing image files
 
 
+image_paths = []
+mask_paths = []
+
+# GET DATA PATHS
+for filename in os.listdir(config.X_TRAIN_DATA):
+    full_path = os.path.join(config.X_TRAIN_DATA, filename)
+    image_paths.append(full_path)
+
+# GET MASK PATHS
+for filename in os.listdir(config.Y_TRAIN_DATA):
+    full_path = os.path.join(config.Y_TRAIN_DATA, filename)
+    mask_paths.append(full_path)
+
+# TRAIN/VAL SPLIT
+x_train, x_val, y_train, y_val = train_test_split(image_paths,
+                                                  mask_paths, 
+                                                  test_size=config.TEST_SPLIT, 
+                                                  random_state = 52)
 
 
-# GET DATA
-train_data:list = [] # list of images loaded as numpy arrays with shape (2048px, 2048px, 3 channels)
+# MAKE DATASETS
+train_dataset = ImageDataset(image_paths=x_train, mask_paths=y_train)
+val_dataset = ImageDataset(image_paths=x_val, mask_paths=y_val)
 
+# LOAD DATA
+train_loader = DataLoader(dataset=train_dataset,
+                          batch_size=config.BATCH_SIZE,
+                          shuffle=True,
+                          num_workers=1)
 
+valid_loader = DataLoader(dataset=val_dataset,
+                          batch_size=config.BATCH_SIZE,
+                          shuffle=False,
+                          num_workers=1)
 
-# GET TRAIN DATA
-image_dir = os.listdir(config.X_TRAIN_DATA)
-mask_dir = os.listdir(config.Y_TRAIN_DATA)
-
-# GET NUMBER OF SAMPLES
-if(len(image_dir) == len(mask_dir)):
-    num_samples = len(image_dir)
-
-
-# GET LOAD IMAGES
-for i in range(num_samples):
-    image_path = os.path.join(config.X_TRAIN_DATA, image_dir[i])
-    mask_path = os.path.join(config.Y_TRAIN_DATA, mask_dir[i])
-
-    image = cv2.imread(image_path)
-
-    
-
+assert(train_loader)

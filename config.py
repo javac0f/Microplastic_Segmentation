@@ -1,49 +1,26 @@
 import torch
-from unet import UNet
+from JC_Models import JC_UNet
 from segmentation_models_pytorch.utils.metrics import IoU
 from segmentation_models_pytorch.utils.losses import DiceLoss
-import os
 
+# FILE PREPROCESSING
 X_TRAIN_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/train_data/Raw_Tiffs"
 Y_TRAIN_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/train_data/Ground_Truth"
-
 X_TEST_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/test_data/Raw_Tiffs"
-
-
-IMAGE_SIZE:int = 256
-BATCH_SIZE:int = 25
 
 TEST_SPLIT:int = 0.2
 
-# Set flag to train the model or not. If set to 'False', only prediction is performed (using an older model checkpoint)
-TRAINING = True
+# MODEL HYPERPARAMS
+EPOCHS:int = 12
+BATCH_SIZE:int = 25
+IMAGE_SIZE:int = 256
+LEARNING_RATE:int = 1e-4
 
-# Set num of epochs
-EPOCHS = 12
+MODEL = JC_UNet()
 
-# Set device: `cuda` or `cpu`
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# define loss function
 LOSS = DiceLoss()
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else 'cpu')
 
-# define metrics
-METRICS = [
-    IoU(threshold=0.5),
-]
-
-# DEFINE MODEL IN-USE
-MODEL = UNet()
-
-# DEFINE DEVICE USED
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-# define optimizer
-OPTIMIZER = torch.optim.Adam([ 
-    dict(params=MODEL.parameters(), lr=0.00008),
-])
-
-# define learning rate scheduler (not used in this NB)
-LR_SCHEDULER = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
-    OPTIMIZER, T_0=1, T_mult=2, eta_min=5e-5,
-)
+# TODO: need to make the parameters
+#OPTIMIZER = torch.optim.Adam([dict(params=MODEL.parameters(), lr=LEARNING_RATE),])
+#SCHEDULER = torch.optim.lr_scheduler.ReduceLROnPlateau(OPTIMIZER, 'min', patience=5, verbose=True)
