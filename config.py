@@ -3,9 +3,11 @@ from unet import UNet
 from segmentation_models_pytorch.utils.metrics import IoU
 from segmentation_models_pytorch.utils.losses import DiceLoss
 import os
-X_TRAIN_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/train_data/Raw_tiffs"
+
+X_TRAIN_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/train_data/Raw_Tiffs"
 Y_TRAIN_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/train_data/Ground_Truth"
-X_TEST_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/test_data/Raw_tiffs"
+
+X_TEST_DATA:str = "C:/Users/jcof2/Documents/Coding_Projects/Microplastic_Segmentation/DATA/test_data/Raw_Tiffs"
 
 
 IMAGE_SIZE:int = 256
