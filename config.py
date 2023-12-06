@@ -16,11 +16,11 @@ BATCH_SIZE:int = 25
 IMAGE_SIZE:int = 256
 LEARNING_RATE:int = 1e-4
 
-MODEL = JC_UNet()
 
 LOSS = DiceLoss()
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else 'cpu')
+MODEL = JC_UNet().to(DEVICE)
+CHECKPOINT_PATH:str = "DOCS/checkpoint.pth"
 
-# TODO: need to make the parameters
-#OPTIMIZER = torch.optim.Adam([dict(params=MODEL.parameters(), lr=LEARNING_RATE),])
-#SCHEDULER = torch.optim.lr_scheduler.ReduceLROnPlateau(OPTIMIZER, 'min', patience=5, verbose=True)
+OPTIMIZER = torch.optim.Adam([dict(params=MODEL.parameters(), lr=LEARNING_RATE),])
+SCHEDULER = torch.optim.lr_scheduler.ReduceLROnPlateau(OPTIMIZER, 'min', patience=5, verbose=True)
